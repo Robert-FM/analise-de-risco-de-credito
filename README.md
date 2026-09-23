@@ -79,6 +79,82 @@ Com o `uv` instalado, sincronize o ambiente a partir do `pyproject.toml` e do `u
 uv sync
 ```
 
+O `uv` cria o ambiente virtual em `.venv`, instala as dependências declaradas em `pyproject.toml` e usa o `uv.lock` para manter as versões reproduzíveis. Execute esse comando a partir da raiz do repositório.
+
+### Instalar o uv
+
+Windows PowerShell:
+
+```powershell
+powershell -ExecutionPolicy ByPass -c "irm https://astral.sh/uv/install.ps1 | iex"
+```
+
+Linux/macOS:
+
+```bash
+curl -LsSf https://astral.sh/uv/install.sh | sh
+```
+
+Feche e abra o terminal novamente, se necessário, e confirme a instalação:
+
+```bash
+uv --version
+```
+
+### Criar e sincronizar o ambiente
+
+Na pasta do projeto, rode:
+
+```bash
+uv sync
+```
+
+O comando seleciona a versão de Python indicada em `.python-version` quando ela está disponível, cria `.venv` automaticamente e instala todas as dependências do projeto. No uso normal, não é necessário executar `pip install`.
+
+Para atualizar as versões permitidas pelas restrições do `pyproject.toml`, faça isso explicitamente:
+
+```bash
+uv lock
+uv sync
+```
+
+### Verificar a instalação
+
+```bash
+uv run python --version
+uv run python -c "import pandas, sklearn, xgboost; print('Dependências carregadas com sucesso')"
+```
+
+### Executar os notebooks
+
+O `uv run` executa o comando dentro do ambiente do projeto sem exigir ativação manual:
+
+```bash
+uv run jupyter notebook
+```
+
+Se preferir ativar o ambiente:
+
+Windows PowerShell:
+
+```powershell
+.venv\Scripts\Activate.ps1
+jupyter notebook
+```
+
+Linux/macOS:
+
+```bash
+source .venv/bin/activate
+jupyter notebook
+```
+
+Se o ambiente não aparecer como kernel no Jupyter, registre-o com:
+
+```bash
+uv run python -m ipykernel install --user --name analise-risco-credito --display-name "Python (analise-risco-credito)"
+```
+
 ## 🐍 Instalação com pip
 
 Como o projeto não possui `requirements.txt`, crie e ative um ambiente virtual e instale o projeto a partir do `pyproject.toml`:
