@@ -73,13 +73,7 @@ analise-risco-credito/
 
 ## 📦 Instalação com uv
 
-Com o `uv` instalado, sincronize o ambiente a partir do `pyproject.toml` e do `uv.lock`:
-
-```bash
-uv sync
-```
-
-O `uv` cria o ambiente virtual em `.venv`, instala as dependências declaradas em `pyproject.toml` e usa o `uv.lock` para manter as versões reproduzíveis. Execute esse comando a partir da raiz do repositório.
+O `uv` cria o ambiente virtual em `.venv`, instala as dependências declaradas em `pyproject.toml` e usa o `uv.lock` para manter as versões reproduzíveis. Execute os comandos a partir da raiz do repositório.
 
 ### Instalar o uv
 
