@@ -1,0 +1,15 @@
+# Python-generated files
+__pycache__/
+*.py[oc]
+build/
+dist/
+wheels/
+*.egg-info
+
+# Virtual environments
+.venv
+anotacaos.txt
+
+# Datasets locais
+data/01-raw/credit_risk_dataset.csv
+credit_risk_dataset.csv
