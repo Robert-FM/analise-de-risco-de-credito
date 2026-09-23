@@ -131,6 +131,7 @@ O notebook de modelos implementa Random Forest e XGBoost. Os modelos são compar
 - Registrar métricas e gráficos gerados.
 - Adicionar testes para preparação dos dados e avaliação dos modelos.
 - Criar um pipeline reprodutível para executar as etapas sem depender exclusivamente da execução manual dos notebooks.
+- Avaliar o uso do modelo em um processo de risco de crédito e em diferentes etapas do ciclo de crédito.
 
 ## 👨‍💻 Autor
 
