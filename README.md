@@ -1,43 +1,32 @@
 # 📊 Análise de Risco de Crédito
 
-Projeto em andamento para análise exploratória e classificação de risco de crédito a partir do dataset `credit_risk_dataset.csv`. O repositório contém um notebook de preparação/análise estatística e outro notebook para comparação de modelos de classificação.
+Projeto de análise exploratória e experimentação de modelos de classificação para dados de risco de crédito. O fluxo é realizado em notebooks Jupyter e cobre a preparação dos dados, a análise estatística e a comparação entre Random Forest e XGBoost.
 
 ## 🎯 Objetivo
 
-Explorar variáveis relacionadas a pessoas e empréstimos, tratar os dados disponíveis e avaliar modelos de machine learning para classificação do risco de crédito.
+Investigar variáveis relacionadas a pessoas e empréstimos e avaliar modelos capazes de classificar o risco de crédito a partir da coluna `classificação_de_crédito`.
 
-## ✨ Funcionalidades implementadas
+O projeto está em desenvolvimento e depende de arquivos CSV locais, que não estão versionados neste repositório.
 
-- Leitura do dataset de risco de crédito.
-- Renomeação das colunas para nomes em português.
-- Padronização de nomes e variáveis categóricas.
-- Remoção de registros duplicados e valores ausentes.
-- Análise de valores ausentes.
-- Cálculo e visualização da matriz de correlação de Pearson.
-- Cálculo da distribuição da variável de status do empréstimo.
+## ✨ Funcionalidades
+
+- Leitura do dataset bruto `credit_risk_dataset.csv`.
+- Renomeação e padronização de colunas e variáveis categóricas.
+- Remoção de duplicidades e valores ausentes.
+- Inspeção de valores ausentes e correlação de Pearson.
+- Análise da distribuição de `status_do_empréstimo`.
 - Codificação de variáveis categóricas com `pandas.get_dummies`.
-- Separação dos dados em treino e teste, com estratificação.
-- Treinamento e comparação de Random Forest e XGBoost.
-- Avaliação com matriz de confusão, relatório de classificação, acurácia, precisão, recall, F1-Score e ROC-AUC.
-- Análise da importância das variáveis nos modelos.
+- Divisão estratificada dos dados em treino e teste.
+- Treinamento de Random Forest e XGBoost usando pipelines com imputação pela mediana.
+- Avaliação por matriz de confusão, relatório de classificação, acurácia, precisão, recall, F1-score e ROC-AUC multiclasse.
+- Inspeção da importância das variáveis nos dois modelos.
 
-## 🛠️ Tecnologias utilizadas
+## 🏗️ Organização do fluxo
 
-- Python 3.14
-- Jupyter Notebook
-- Pandas e NumPy
-- Matplotlib, Seaborn e Plotly
-- Missingno
-- Scikit-learn
-- XGBoost
-- uv para gerenciamento do ambiente e dependências
+1. `analise-estatistica/analise-dados.ipynb` lê o dataset bruto, renomeia colunas, remove duplicidades e valores ausentes, realiza análises exploratórias e prepara os dados.
+2. `modelos/ml-analise-sem-regressao-logistica.ipynb` lê o CSV processado, codifica as variáveis, treina os modelos e imprime métricas e importâncias.
 
-## 🏗️ Organização do projeto
-
-O fluxo está organizado em duas etapas principais:
-
-1. `analise-estatistica/analise-dados.ipynb`: leitura, limpeza, padronização e análise exploratória do dataset bruto.
-2. `modelos/ml-analise-sem-regressao-logistica.ipynb`: leitura dos dados processados, preparação das variáveis, treinamento e avaliação dos modelos Random Forest e XGBoost.
+O segundo notebook espera `data/02-processed/risco-de-credito-tratados.csv`. O notebook de análise não exporta esse arquivo automaticamente; ele precisa ser gerado manualmente a partir do dataframe tratado.
 
 ## 📁 Estrutura do projeto
 
@@ -45,12 +34,6 @@ O fluxo está organizado em duas etapas principais:
 analise-risco-credito/
 ├── analise-estatistica/
 │   └── analise-dados.ipynb
-├── data/
-│   ├── 01-raw/
-│   │   ├── .gitkeep
-│   │   └── credit_risk_dataset.csv  # arquivo local, ignorado pelo Git
-│   └── 02-processed/
-│       └── .gitkeep
 ├── modelos/
 │   └── ml-analise-sem-regressao-logistica.ipynb
 ├── .gitignore
@@ -60,98 +43,33 @@ analise-risco-credito/
 └── README.md
 ```
 
-- `data/01-raw/`: dados brutos de entrada. O arquivo `credit_risk_dataset.csv` é utilizado localmente e está listado no `.gitignore` para não ser versionado.
-- `data/02-processed/`: destino previsto para o dataset tratado.
-- `analise-estatistica/`: notebook de análise e preparação dos dados.
-- `modelos/`: notebook de treinamento e comparação dos modelos.
+Os notebooks usam `data/01-raw/` e `data/02-processed/`. Esses diretórios e CSVs não estão presentes no estado versionado analisado. O arquivo bruto é ignorado pelo `.gitignore`.
 
 ## 📋 Pré-requisitos
 
-- Python 3.14, conforme `.python-version` e `pyproject.toml`.
-- Jupyter Notebook ou outro ambiente compatível com notebooks `.ipynb`.
-- `uv`, recomendado pelo projeto, ou `pip`.
+- Python 3.14, conforme `.python-version` e `pyproject.toml` (`>=3.14`).
+- `uv` ou `pip`.
+- Um ambiente capaz de executar notebooks Jupyter.
+- Os arquivos CSV locais esperados pelos notebooks.
+
+Não há banco de dados, serviço externo, Docker, API, pipeline de CI/CD ou variáveis de ambiente configurados.
 
 ## 📦 Instalação com uv
 
-O `uv` cria o ambiente virtual em `.venv`, instala as dependências declaradas em `pyproject.toml` e usa o `uv.lock` para manter as versões reproduzíveis. Execute os comandos a partir da raiz do repositório.
-
-### Instalar o uv
-
-Windows PowerShell:
-
-```powershell
-powershell -ExecutionPolicy ByPass -c "irm https://astral.sh/uv/install.ps1 | iex"
-```
-
-Linux/macOS:
-
-```bash
-curl -LsSf https://astral.sh/uv/install.sh | sh
-```
-
-Feche e abra o terminal novamente, se necessário, e confirme a instalação:
-
-```bash
-uv --version
-```
-
-### Criar e sincronizar o ambiente
-
-Na pasta do projeto, rode:
+O projeto possui `pyproject.toml` e `uv.lock`. Na raiz do repositório:
 
 ```bash
 uv sync
-```
-
-O comando seleciona a versão de Python indicada em `.python-version` quando ela está disponível, cria `.venv` automaticamente e instala todas as dependências do projeto. No uso normal, não é necessário executar `pip install`.
-
-Para atualizar as versões permitidas pelas restrições do `pyproject.toml`, faça isso explicitamente:
-
-```bash
-uv lock
-uv sync
-```
-
-### Verificar a instalação
-
-```bash
 uv run python --version
-uv run python -c "import pandas, sklearn, xgboost; print('Dependências carregadas com sucesso')"
 ```
 
-### Executar os notebooks
-
-O `uv run` executa o comando dentro do ambiente do projeto sem exigir ativação manual:
+Jupyter não está declarado no projeto. Para abrir os notebooks sem alterar os arquivos:
 
 ```bash
-uv run jupyter notebook
-```
-
-Se preferir ativar o ambiente:
-
-Windows PowerShell:
-
-```powershell
-.venv\Scripts\Activate.ps1
-jupyter notebook
-```
-
-Linux/macOS:
-
-```bash
-source .venv/bin/activate
-jupyter notebook
-```
-
-Se o ambiente não aparecer como kernel no Jupyter, registre-o com:
-
-```bash
-uv run python -m ipykernel install --user --name analise-risco-credito --display-name "Python (analise-risco-credito)"
+uv run --with jupyter notebook
 ```
 
 ## 🐍 Instalação com pip
-
-Como o projeto não possui `requirements.txt`, crie e ative um ambiente virtual e instale o projeto a partir do `pyproject.toml`:
 
 ```bash
 python -m venv .venv
@@ -161,47 +79,60 @@ Windows PowerShell:
 
 ```powershell
 .venv\Scripts\Activate.ps1
-python -m pip install -e .
 ```
 
 Linux/macOS:
 
 ```bash
 source .venv/bin/activate
-python -m pip install -e .
+```
+
+Como não há `requirements.txt`, instale as dependências declaradas no `pyproject.toml` e Jupyter:
+
+```bash
+python -m pip install "missingno>=0.5.2" "pandas>=3.0.3" "plotly>=6.7.0" "scikit-learn>=1.8.0" "seaborn>=0.13.2" "xgboost>=3.2.0" jupyter
 ```
 
 ## ▶️ Como executar
 
-O projeto não possui um script de entrada ou uma CLI. A execução é feita pelos notebooks:
+1. Crie `data/01-raw/` e coloque nela `credit_risk_dataset.csv`.
+2. Abra `analise-estatistica/analise-dados.ipynb`.
+3. Execute as células a partir do diretório do próprio notebook, pois os caminhos são relativos a ele.
+4. Exporte o dataframe tratado para `data/02-processed/risco-de-credito-tratados.csv`.
+5. Abra `modelos/ml-analise-sem-regressao-logistica.ipynb` e execute suas células a partir de `modelos/`.
 
-1. Abra `analise-estatistica/analise-dados.ipynb`.
-2. Disponibilize localmente o arquivo `data/01-raw/credit_risk_dataset.csv`. Esse arquivo não é enviado ao repositório porque está ignorado pelo Git.
-3. Execute as células para carregar e tratar o dataset.
-4. Salve o dataframe tratado em `data/02-processed/risco-de-credito-tratados.csv` antes de executar o notebook de modelos.
-5. Abra `modelos/ml-analise-sem-regressao-logistica.ipynb` e execute suas células.
+Com `pip`, inicie o ambiente com `jupyter notebook`; com `uv`, use `uv run --with jupyter notebook`.
 
-Os caminhos relativos usados nos notebooks pressupõem que cada notebook seja executado a partir do seu próprio diretório.
+## 🧰 Tecnologias e dependências principais
 
-## 📊 Modelos e avaliação
+- Python 3.14 e Jupyter Notebook.
+- Pandas e NumPy para manipulação dos dados.
+- Missingno para inspeção de valores ausentes.
+- Matplotlib, Seaborn e Plotly para visualização.
+- Scikit-learn para divisão dos dados, pipelines, imputação, Random Forest e métricas.
+- XGBoost para o modelo XGBoost.
+- uv para gerenciamento das dependências.
 
-O notebook de modelos implementa Random Forest e XGBoost. Os modelos são comparados usando acurácia, precisão ponderada, recall ponderado, F1-Score ponderado e ROC-AUC multiclasse. Também são exibidas matrizes de confusão, relatórios de classificação e as quinze variáveis mais importantes.
+As versões mínimas estão em `pyproject.toml`; as versões resolvidas estão em `uv.lock`.
 
-## ⚠️ Estado atual e limitações
+## ✅ Testes
 
-- O projeto está em andamento.
-- O arquivo `data/01-raw/credit_risk_dataset.csv` é um dataset local e está ignorado pelo Git; ele precisa ser obtido e colocado manualmente nessa pasta para reproduzir a análise.
-- O diretório `data/02-processed/` está presente, mas o arquivo `risco-de-credito-tratados.csv` ainda não está disponível; ele precisa ser gerado antes da execução do notebook de modelos.
-- Não há scripts Python independentes, testes automatizados, API, aplicação web ou pipeline de CI/CD no repositório atual.
-- Os resultados numéricos dos modelos são impressos durante a execução e não estão registrados em arquivos ou documentação.
+Não há testes automatizados. A validação ocorre durante a execução dos notebooks, por meio das análises e métricas impressas.
 
-## 🚀 Próximos passos
+## ⚠️ Limitações atuais
 
-- Incorporar ao notebook a exportação do dataset tratado.
-- Registrar métricas e gráficos gerados.
-- Adicionar testes para preparação dos dados e avaliação dos modelos.
-- Criar um pipeline reprodutível para executar as etapas sem depender exclusivamente da execução manual dos notebooks.
-- Avaliar o uso do modelo em um processo de risco de crédito e em diferentes etapas do ciclo de crédito.
+- Os datasets de entrada e saída não estão versionados.
+- A exportação do CSV processado é manual.
+- Não há script ou CLI para automatizar o fluxo.
+- Métricas e gráficos não são persistidos como artefatos.
+- Não há testes automatizados nem CI/CD.
+
+## 🚀 Possíveis melhorias
+
+- Automatizar a exportação do dataset tratado.
+- Separar preparação e treinamento em módulos ou scripts reutilizáveis.
+- Persistir métricas e gráficos.
+- Adicionar testes e um fluxo automatizado para as duas etapas.
 
 ## 👨‍💻 Autor
 
